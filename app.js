@@ -1,11 +1,10 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
   const squares = document.querySelectorAll('.grid div')
   const scoreDisplay = document.querySelector('span')
   const startBtn = document.querySelector('.start')
 
-  const width = 10
+  const width = 48
+  const height = 27
   let currentIndex = 0 //so first div in our grid
   let appleIndex = 0 //so first div in our grid
   let currentSnake = [2,1,0] 
@@ -25,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     randomApple()
     direction = 1
     scoreDisplay.innerText = score
-    intervalTime = 1000
+    intervalTime = 100
     currentSnake = [2,1,0]
     currentIndex = 0
     currentSnake.forEach(index => squares[index].classList.add('snake'))
@@ -38,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //deals with snake hitting border and snake hitting self
     if (
-      (currentSnake[0] + width >= (width * width) && direction === width ) || //if snake hits bottom
+      (currentSnake[0] + width >= (width * height) && direction === width ) || //if snake hits bottom
       (currentSnake[0] % width === width -1 && direction === 1) || //if snake hits right wall
       (currentSnake[0] % width === 0 && direction === -1) || //if snake hits left wall
       (currentSnake[0] - width < 0 && direction === -width) ||  //if snake hits the top
@@ -74,23 +73,51 @@ document.addEventListener('DOMContentLoaded', () => {
     } while(squares[appleIndex].classList.contains('snake')) //making sure apples dont appear on the snake
     squares[appleIndex].classList.add('apple')
   }
+  
+  // user input function
+    window.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.defaultPrevented) {
+          return; // Do nothing if event already handled
+        }
+        
+        // Player movement control
+        switch (event.code) {
 
+          case "KeyW":
+          case "ArrowUp":
+            // Handle "forward"
+            direction = -width;
+            break;
+    
+          case "KeyS":
+          case "ArrowDown":
+            // Handle "back"
+            direction = width;
+            break;
+    
+          case "KeyA":
+          case "ArrowLeft":
+            // Handle "turn left"
+            direction = -1;
+            break;
+    
+          case "KeyD":
+          case "ArrowRight":
+            // Handle "turn right"
+            direction = 1;
+            break;
 
-  //assign functions to keycodes
-  function control(e) {
-    squares[currentIndex].classList.remove('snake')
+         }
 
-    if(e.keyCode === 39) {
-      direction = 1 //if we press the right arrow on our keyboard, the snake will go right one
-    } else if (e.keyCode === 38) {
-      direction = -width // if we press the up arrow, the snake will go back ten divs, appearing to go up
-    } else if (e.keyCode === 37) {
-      direction = -1 // if we press left, the snake will go left one div
-    } else if (e.keyCode === 40) {
-      direction = +width //if we press down, the snake head will instantly appear in the div ten divs from where you are now
-    }
-  }
-
-  document.addEventListener('keyup', control)
+        // Restart game
+        switch (event.code) {
+          case "Enter":
+            startGame();
+            break;
+        }
+      }
+    )
   startBtn.addEventListener('click', startGame)
 })
