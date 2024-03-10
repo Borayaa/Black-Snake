@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let appleIndex = 0 //so first div in our grid
   let currentSnake = [2,1,0] 
   let direction = 1
+  let newDirection = 1
   let score = 0
   let speed = 0.9
   let intervalTime = 0
@@ -50,6 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
     squares[tail].classList.remove('snake')  //removes class of snake from the TAIL
     currentSnake.unshift(currentSnake[0] + direction) //gives direction to the head of the array
 
+    // Does not allow a reverse or the same direction
+    if (Math.abs(newDirection) !== Math.abs(direction)) {
+    direction = newDirection;
+    }
+
     //deals with snake getting apple
     if(squares[currentSnake[0]].classList.contains('apple')) {
       squares[currentSnake[0]].classList.remove('apple')
@@ -74,50 +80,49 @@ document.addEventListener('DOMContentLoaded', () => {
     squares[appleIndex].classList.add('apple')
   }
   
-  // user input function
-    window.addEventListener(
-      "keydown",
-      (event) => {
-        if (event.defaultPrevented) {
-          return; // Do nothing if event already handled
-        }
-        
-        // Player movement control
-        switch (event.code) {
-
-          case "KeyW":
-          case "ArrowUp":
-            // Handle "forward"
-            direction = -width;
-            break;
-    
-          case "KeyS":
-          case "ArrowDown":
-            // Handle "back"
-            direction = width;
-            break;
-    
-          case "KeyA":
-          case "ArrowLeft":
-            // Handle "turn left"
-            direction = -1;
-            break;
-    
-          case "KeyD":
-          case "ArrowRight":
-            // Handle "turn right"
-            direction = 1;
-            break;
-
-         }
-
-        // Restart game
-        switch (event.code) {
-          case "Enter":
-            startGame();
-            break;
-        }
+  function playerInput (event) {
+      if (event.defaultPrevented) {
+        return; // Do nothing if event already handled
       }
-    )
+      
+      // Player movement control
+      switch (event.code) {
+
+        case "KeyW":
+        case "ArrowUp":
+          // Handle "forward"
+          newDirection = -width;
+          break;
+  
+        case "KeyS":
+        case "ArrowDown":
+          // Handle "back"
+          newDirection = width;
+          break;
+  
+        case "KeyA":
+        case "ArrowLeft":
+          // Handle "turn left"
+          newDirection = -1;
+          break;
+  
+        case "KeyD":
+        case "ArrowRight":
+          // Handle "turn right"
+          newDirection = 1;
+          break;
+
+        }
+
+      // Restart game
+      switch (event.code) {
+        case "Enter":
+          startGame();
+          break;
+      }
+    }
+  
+  // user input function
+  window.addEventListener("keydown", playerInput)
   startBtn.addEventListener('click', startGame)
 })
