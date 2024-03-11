@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const height = 27
   let currentIndex = 0 //so first div in our grid
   let appleIndex = 0 //so first div in our grid
-  let currentSnake = [635,634,633] 
+  let currentSnake = [635,634,633]
+  let pistol = [currentSnake[1]] 
   let direction = 1
   let newDirection = 1
   let score = 0
@@ -28,8 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     scoreDisplay.innerText = score
     intervalTime = 100
     currentSnake = [635,634,633]
+    pistol = [currentSnake[1]]
     currentIndex = 0
     currentSnake.forEach(index => squares[index].classList.add('snake'))
+    squares[pistol[0]].classList.add('pistol')
     interval = setInterval(moveOutcomes, intervalTime)
   }
 
@@ -51,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const tail = currentSnake.pop() //removes last ite of the array and shows it
-    squares[tail].classList.remove('snake')  //removes class of snake from the TAIL
+    squares[tail].classList.remove('snake', 'pistol')  //removes class of snake from the TAIL
     currentSnake.unshift(currentSnake[0] + direction) //gives direction to the head of the array
 
     // Does not allow a reverse or the same direction
@@ -72,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
       interval = setInterval(moveOutcomes, intervalTime)
     }
     squares[currentSnake[0]].classList.add('snake')
+    squares[pistol[0]].classList.add('pistol')
   }
 
 
