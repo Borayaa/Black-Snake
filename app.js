@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const height = 27
   let currentIndex = 0 //so first div in our grid
   let appleIndex = 0 //so first div in our grid
-  let currentSnake = [2,1,0] 
+  let currentSnake = [635,634,633] 
   let direction = 1
   let newDirection = 1
   let score = 0
@@ -24,9 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
     score = 0
     randomApple()
     direction = 1
+    newDirection = 1
     scoreDisplay.innerText = score
     intervalTime = 100
-    currentSnake = [2,1,0]
+    currentSnake = [635,634,633]
     currentIndex = 0
     currentSnake.forEach(index => squares[index].classList.add('snake'))
     interval = setInterval(moveOutcomes, intervalTime)
@@ -44,6 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
       (currentSnake[0] - width < 0 && direction === -width) ||  //if snake hits the top
       squares[currentSnake[0] + direction].classList.contains('snake') //if snake goes into itself
     ) {
+      direction = 1
+      newDirection = 1
       return clearInterval(interval) //this will clear the interval if any of the above happen
     }
 
