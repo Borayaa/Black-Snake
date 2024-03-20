@@ -35,17 +35,17 @@ body {
 }
 
 .snake {
-  background-color: black;
+  background-image: url('img/Body.png');
 }
 
 .apple {
-  background-color: purple;
+  background-image: url('img/Apple.png');
 }
 
 .snake.head {
-  background-color: red;
+  background-image: url('img/Head.png');
 }
 
 .snake.tail {
-  background-color: blue;
+  background-image: url('img/Tail.png');
 }
