@@ -51,7 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const tail = currentSnake.pop() //removes last ite of the array and shows it
-    squares[tail].classList.remove('snake')  //removes class of snake from the TAIL
+    squares[tail].classList.remove('snake','tail')  //removes class of snake from the TAIL
+    squares[currentSnake[currentSnake.length - 1]].classList.add('tail')
+    squares[currentSnake[0]].classList.remove('head')
+    squares[currentSnake[0] + direction].classList.add('head')
     currentSnake.unshift(currentSnake[0] + direction) //gives direction to the head of the array
 
     // Does not allow a reverse or the same direction
