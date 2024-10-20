@@ -47,7 +47,7 @@ function automaticPlayer() {
             if (movement == 'down') {
                 break;
             }
-            if (playerPosition <= row) {
+            if (playerPosition[0] <= row) {
                 block[playerPosition[playerPosition.length - 1]].className = 'block';
                 playerPosition.splice(playerPosition.length - 1, 1);
                 playerPosition.unshift(playerPosition[0] + (row * column - row));
@@ -70,7 +70,15 @@ function automaticPlayer() {
                 break;
             }
             movement = 'down';
-    
+            if (playerPosition[0] >= (column * row)) {
+                block[playerPosition[playerPosition.length - 1]].className = 'block';
+                playerPosition.splice(playerPosition.length - 1, 1);
+                playerPosition.unshift(playerPosition[0] - (row * column + row));
+                block[playerPosition[0]].className = 'block player';
+                console.log(playerPosition);
+                break;
+            }
+
             block[playerPosition[playerPosition.length - 1]].className = 'block';
             playerPosition.splice(playerPosition.length - 1, 1);
             playerPosition.unshift(playerPosition[0] + 68);
