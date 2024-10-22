@@ -9,23 +9,26 @@ for (let i = 0; i < 2244; i++) {
 }
 let movement = 'left';
 
-const block = document.getElementsByClassName('block');
-block[1000].className = 'block apple';
-// Class apple dengan spawn random
-function spawnApple() {
-    let applePosition;
-    const block = document.getElementsByClassName('block');
+let applePosition = Math.floor(Math.random() * row * column); 
 
-    // Kalau player nyentuh apple spawn apple baru
-    if (playerPosition.includes(applePosition)){
+const block = document.getElementsByClassName('block');
+function spawnApple() {
+
+    if (playerPosition.includes(applePosition)) {
+        // block[applePosition].className = 'block';
+
         applePosition = Math.floor(Math.random() * row * column);
-    }
-    let apple = block[applePosition].className = 'apple';
+
+        let newBlockPosition = playerPosition[playerPosition.length - 1]
+        playerPosition.push(newBlockPosition);
+        block[newBlockPosition].className = 'block player';
+}
+    block[applePosition].className = 'block apple';
 }
 
 function gameLoop() {
     automaticPlayer();
-    spawnApple()
+    spawnApple();
 }
 
 // banyak kotak dalam 1 baris dikali banyak kotak dalam 1 kolom dikurang banyak kotak dalam 1 baris
